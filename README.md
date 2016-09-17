@@ -1,5 +1,5 @@
 # ckan-install-script
-A Bash script to (partially!) automate CKAN installation
+A Bash script to (partially!) automate [CKAN](http://ckan.org/) installation
 
 **Don't just run the script!**
 It is intended as a record of an installation of CKAN 2.5 on Ubuntu Server 16.04.
@@ -13,4 +13,4 @@ The config file is /etc/default/jetty8 instead of /etc/default/jetty
 
 ##Startup as a service
 
-systemd script added to start CKAN as a service.
+systemd script added to start [CKAN](http://ckan.org/) as a service.
