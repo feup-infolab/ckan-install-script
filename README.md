@@ -1,4 +1,4 @@
-# ckan-install-script
+# CKAN Install Scripts
 A Bash script to (**partially**) automate [CKAN](http://ckan.org/) installation
 
 **Don't just run the script!**
