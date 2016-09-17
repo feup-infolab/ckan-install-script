@@ -13,4 +13,4 @@ The config file is /etc/default/jetty8 instead of /etc/default/jetty
 
 ##Startup as a service
 
-systemd script added to start [CKAN](http://ckan.org/) as a service.
+systemd script added to start [CKAN](http://ckan.org/) as a service. This is intended to allow the python virtualenv to be loaded on service startup.
