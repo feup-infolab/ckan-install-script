@@ -89,7 +89,7 @@ export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 virtualenv --no-site-packages /usr/lib/ckan/default
 source /usr/lib/ckan/default/bin/activate
-paster serve /etc/ckan/default/development.ini
+paster serve /etc/ckan/default/development.ini | tee /var/log/ckan_port_5000.log
 " | sudo tee /usr/lib/ckan/default/src/ckan/startup.sh
 
 sudo chmod +x /usr/lib/ckan/default/src/ckan/startup.sh
@@ -105,7 +105,7 @@ TimeoutStartSec=infinity
 User=ckan
 WorkingDirectory=/usr/lib/ckan/default/src/ckan
 KillMode=control-group
-ExecStart=/bin/bash -c '/usr/lib/ckan/default/src/ckan/startup.sh | tee /var/log/ckan_port_5000.log'
+ExecStart=/bin/bash -c '/usr/lib/ckan/default/src/ckan/startup.sh'
 [Install]
 WantedBy=multi-user.target\n" | sudo tee /etc/systemd/system/ckan_port_5000.service
 
