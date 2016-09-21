@@ -12,6 +12,8 @@ sudo ln -s ~/ckan/etc /etc/ckan
 
 sudo mkdir -p /usr/lib/ckan/default
 sudo chown ckan /usr/lib/ckan/default
+sudo mkdir /var/lib/ckan/resources
+sudo chown ckan /var/lib/ckan
 
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
