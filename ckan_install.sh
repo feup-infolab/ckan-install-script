@@ -42,6 +42,7 @@ sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 sudo mkdir -p /etc/ckan/default
 sudo chown -R `whoami` /etc/ckan/
 sudo chown -R `whoami` ~/ckan/etc
+sudo chown -R `whoami`  ~/ckan/etc
 
 printf "Edit Jetty config file at /etc/default/jetty8"
 read 
