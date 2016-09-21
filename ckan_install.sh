@@ -24,7 +24,7 @@ deactivate
 cd ~
 pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.5.2#egg=ckan'
 
-pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt
+sudo pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external
 
 ##	for verification
 #deactivate
