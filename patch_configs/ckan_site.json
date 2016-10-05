@@ -1,0 +1,40 @@
+[
+  {
+    "id" : "set_database_password",
+    "description" : "Set postgresql password",
+    "file": "/etc/ckan/default/development.ini",
+    "patches" :
+    [
+      {
+        "before": "sqlalchemy.url = postgresql://ckan_default:pass@localhost/ckan_default",
+        "after": "sqlalchemy.url = postgresql://ckan_default:PASSSWORRDDDDDD__FIXME@localhost/ckan_default"
+      }
+    ]
+
+  },
+  {
+    "id" : "change_site_id",
+    "description" : "Set CKAN site ID",
+    "file": "/etc/ckan/default/development.ini",
+    "patches" :
+    [
+      {
+        "before": "ckan.site_id = default",
+        "after": "ckan.site_id = your_ckan_installation"
+      }
+    ]
+
+  },
+  {
+    "id" : "change_site_url",
+    "description" : "Set CKAN Site URL",
+    "file": "/etc/ckan/default/development.ini",
+    "patches" :
+    [
+      {
+        "before": "ckan.site_url =",
+        "after": "ckan.site_url = http://192.168.56.3"
+      }
+    ]
+  }
+]

@@ -1,7 +1,7 @@
 # CKAN Install Scripts
 A Bash script to (**partially**) automate [CKAN](http://ckan.org/) installation
 
-**Don't just run the script!**
+**Don't just run the script!!**
 It is intended as a record of an installation of CKAN 2.5 on Ubuntu Server 16.04.
 Copy and paste every line while following the [tutorial](http://docs.ckan.org/en/latest/maintaining/installing/index.html).
 

@@ -1,0 +1,22 @@
+[
+  {
+    "id" : "datastore_config",
+    "description" : "Configure DataStore",
+    "file": "/etc/ckan/default/development.ini",
+    "patches" :
+    [
+      {
+        "before": "ckan.plugins = stats text_view image_view recline_view",
+        "after": "ckan.plugins = stats text_view image_view recline_view datastore"
+      },
+      {
+        "before": "#ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default",
+        "after": "ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default"
+      },
+      {
+        "before": "#ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default",
+        "after": "ckan.datastore.write_url = postgresql://datastore_default:pass@localhost/datastore_default"
+      }
+    ]
+  }
+]

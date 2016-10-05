@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 sudo apt-get install python-dev postgresql libpq-dev python-pip python-virtualenv git-core solr-jetty
+sudo -H pip install --upgrade pip
 
 #create ckan user
-adduser ckan
+sudo adduser ckan
 
 mkdir -p ~/ckan/lib
 sudo ln -s ~/ckan/lib /usr/lib/ckan
@@ -12,21 +13,21 @@ sudo ln -s ~/ckan/etc /etc/ckan
 
 sudo mkdir -p /usr/lib/ckan/default
 sudo chown ckan /usr/lib/ckan/default
-sudo mkdir /var/lib/ckan/resources
+sudo mkdir -p /var/lib/ckan/resources
 sudo chown ckan /var/lib/ckan
 
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
+su ckan #enter password
 virtualenv --no-site-packages /usr/lib/ckan/default
 . /usr/lib/ckan/default/bin/activate
 
-deactivate
+#deactivate
 
 cd ~
 pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.5.2#egg=ckan'
-
-sudo pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external
+pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external
 
 ##	for verification
 #deactivate
@@ -42,12 +43,18 @@ sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
 
 #Create a CKAN config file
 sudo mkdir -p /etc/ckan/default
-sudo chown -R `whoami` /etc/ckan/
-sudo chown -R `whoami` ~/ckan/etc
-sudo chown -R `whoami`  ~/ckan/etc
+sudo chown -R ckan /etc/ckan/
+sudo chown -R ckan ~/ckan/etc
+sudo chown -R ckan  ~/ckan/etc
+
+su ckan
+git clone https://github.com/silvae86/filepatcher.git
+node filepatcher/filepatcher.js \
+                    --patch-config=patch_configs/ckan_jetty.json \
+                    --overwrite="true"
 
 printf "Edit Jetty config file at /etc/default/jetty8"
-read 
+read
 
 #Replace the default schema.xml file with a symlink to the CKAN schema file included in the sources.
 sudo mv /etc/solr/conf/schema.xml /etc/solr/conf/schema.xml.bak
@@ -57,6 +64,10 @@ sudo service jetty8 restart
 
 #check if jetty runs at the correct port
 telnet localhost 8983
+
+#create ckan configuration file
+sudo apt-get install python-pastescript
+paster make-config ckan /etc/ckan/default/development.ini
 
 #change solr url in ckan config file to solr_url=http://127.0.0.1:8983/solr
 vim /etc/ckan/default/development.ini
@@ -97,7 +108,7 @@ paster serve /etc/ckan/default/development.ini | tee /var/log/ckan_port_5000.log
 sudo chmod +x /usr/lib/ckan/default/src/ckan/startup.sh
 
 printf "[Unit]
-Description=CKAN Instance at Port 5000 
+Description=CKAN Instance at Port 5000
 [Service]
 Type=simple
 Restart=on-failure
@@ -115,10 +126,3 @@ sudo systemctl daemon-reload
 sudo systemctl reload
 sudo systemctl enable ckan_port_5000
 sudo systemctl start ckan_port_5000
-
-
-
-
-
-
-

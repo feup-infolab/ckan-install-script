@@ -1,0 +1,12 @@
+{
+  "id": "set_port",
+  "description": "Set CKAN Listening Port",
+  "file": "tests/development.ini",
+  "patches":
+  [
+    {
+      "before": "port = 5000",
+      "after": "port = 5001"
+    }
+  ]
+}

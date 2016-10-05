@@ -1,0 +1,14 @@
+[
+  {
+    "id": "set_solr_config",
+    "description": "Set SOLR Configs on CKAN configuration file",
+    "file": "/etc/ckan/default/development.ini",
+    "patches":
+    [
+      {
+        "before": "#solr_url = http://127.0.0.1:8983/solr",
+        "after": "solr_url=http://127.0.0.1:8983/solr"
+      }
+    ]
+  }
+]

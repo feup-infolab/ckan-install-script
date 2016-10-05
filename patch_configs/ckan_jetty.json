@@ -1,0 +1,22 @@
+[
+  {
+    "id" : "change_jetty_configs",
+    "description" : "Set Jetty Configs",
+    "file": "/etc/default/jetty8",
+    "patches" :
+    [
+      {
+        "before": "NO_START=0",
+        "after": "NO_START=0            # (line 4)"
+      },
+      {
+        "before": "#JETTY_HOST=$(uname -n)",
+        "after": "JETTY_HOST=127.0.0.1  # (line 16)"
+      },
+      {
+        "before":"#JETTY_PORT=8080",
+        "after": "JETTY_PORT=8983       # (line 19)"
+      }
+    ]
+  }
+]
