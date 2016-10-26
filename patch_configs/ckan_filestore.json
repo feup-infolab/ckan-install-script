@@ -1,0 +1,14 @@
+[
+  {
+    "id" : "filestore_config",
+    "description" : "Configure FileStore for file uploads",
+    "file": "/etc/ckan/default/development.ini",
+    "patches" :
+    [
+      {
+        "before": "[app:main]",
+        "after": "[app:main]\nckan.storage_path = /var/lib/ckan/default"
+      }
+    ]
+  }
+]
