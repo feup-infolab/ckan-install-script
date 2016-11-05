@@ -94,6 +94,15 @@ sudo touch /etc/systemd/system/ckan_port_5000.service
 sudo chmod 0655 /etc/systemd/system/ckan_port_5000.service
 sudo mkdir /var/lib/ckan
 
+#create storage files
+sudo mkdir -p /var/lib/ckan/resources
+sudo chmod u+rwx /var/lib/ckan/resources
+
+sudo mkdir -p /var/lib/ckan/default
+sudo chmod u+rwx /var/lib/ckan/default
+
+sudo chown -R ckan /var/lib/ckan/
+
 #create a script file at /usr/lib/ckan/default/src/ckan/startup.sh to load it in the service. oneliner in ExecStart command was not working because you need to source the virtualenv init script???
 
 printf "
