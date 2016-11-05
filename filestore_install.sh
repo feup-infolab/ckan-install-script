@@ -11,7 +11,13 @@ sudo vim /etc/ckan/default/development.ini
 
 #set permissions on the uploads folder
 
-sudo chown www-data /var/lib/ckan/default
+#create storage files
+sudo mkdir -p /var/lib/ckan/resources
+sudo chmod u+rwx /var/lib/ckan/resources
+
+sudo mkdir -p /var/lib/ckan/default
 sudo chmod u+rwx /var/lib/ckan/default
+
+sudo chown -R ckan /var/lib/ckan/
 
 sudo service jetty8 restart
