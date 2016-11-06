@@ -15,6 +15,12 @@ The config file is /etc/default/jetty8 instead of /etc/default/jetty
 
 systemd script added to start [CKAN](http://ckan.org/) as a service. This is intended to allow the python virtualenv to be loaded on service startup.
 
+##Monitoring CKAN
+
+CKAN prints its output to the journal. To monitor, use the following command:
+
+`sudo journalctl -f`
+
 ##Acknowledgements
 
 This work was supported by project NORTE-07-0124-FEDER-000059, financed by the North Portugal Regional Operational Programme (ON.2-O Novo Norte), under the National Strategic Reference Framework (NSRF), through the European Regional Development Fund (ERDF), and by national funds, through the Portuguese funding agency, Fundação para a Ciência e a Tecnologia (FCT). João Rocha da Silva was also supported by research grant SFRH/BD/77092/2011, provided by the Portuguese funding agency, Fundação para a Ciência e a Tecnologia (FCT).
