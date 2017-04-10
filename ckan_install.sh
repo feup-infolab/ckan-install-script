@@ -47,11 +47,22 @@ sudo chown -R ckan /etc/ckan/
 sudo chown -R ckan ~/ckan/etc
 sudo chown -R ckan  ~/ckan/etc
 
+sudo apt-get -y install nodejs npm vim
 su ckan
 git clone https://github.com/silvae86/filepatcher.git
-node filepatcher/filepatcher.js \
-                    --patch-config=patch_configs/ckan_jetty.json \
-                    --overwrite="true"
+cd filepatcher
+npm install
+
+#edit Jetty8 configuration
+chmod ugo+w /etc/default/jetty8
+vim /etc/default/jetty8
+
+#Replace sections
+#   NO_START=0                            -> NO_START=0            # (line 4)
+#   #JETTY_HOST=$(uname -n)               -> JETTY_HOST=127.0.0.1  # (line 16)
+#   #JETTY_PORT=8080                      -> JETTY_PORT=8983       # (line 19)
+
+#save (type :wq ENTER)
 
 printf "Edit Jetty config file at /etc/default/jetty8"
 read
@@ -67,10 +78,33 @@ telnet localhost 8983
 
 #create ckan configuration file
 sudo apt-get install python-pastescript
+su ckan
+cd ~
+
+#activate python virtualenv
+su ckan
+virtualenv --no-site-packages /usr/lib/ckan/default
+. /usr/lib/ckan/default/bin/activate
+
+#create default ckan config file
 paster make-config ckan /etc/ckan/default/development.ini
 
 #change solr url in ckan config file to solr_url=http://127.0.0.1:8983/solr
 vim /etc/ckan/default/development.ini
+
+#Replace sections
+#   #solr_url = http://127.0.0.1:8983/solr                            -> solr_url=http://127.0.0.1:8983/solr
+
+#save (type :wq ENTER)
+
+#edit CKAN site_url and default password
+vim /etc/ckan/default/development.ini
+
+#Replace sections
+#   ckan.site_url =                             -> ckan.site_url = http://<IP/name of the machine.xpto.com>
+#   sqlalchemy.url = postgresql://ckan_default:pass@localhost/ckan_default =                             -> sqlalchemy.url = postgresql://ckan_default:ckan@localhost/ckan_default #ASSUMING THE postgresql credentials are: password 'ckan';  username 'ckan_default'
+
+#save (type :wq ENTER)
 
 #Create database tables
 cd /usr/lib/ckan/default/src/ckan
@@ -80,7 +114,8 @@ paster db init -c /etc/ckan/default/development.ini
 #link who.ini
 ln -s /usr/lib/ckan/default/src/ckan/who.ini /etc/ckan/default/who.ini
 
-#start server
+#start server (make sure you have the python virtual env activated before)
+#the command line should be like >>>>>>(default)<<<<<<< ckan@yulia-VirtualBox:/usr/lib/ckan/default/src/ckan$
 cd /usr/lib/ckan/default/src/ckan
 paster serve /etc/ckan/default/development.ini
 
