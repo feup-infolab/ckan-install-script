@@ -7,7 +7,7 @@ virtualenv --no-site-packages /usr/lib/ckan/default
 
 #install ckanext-scheming
 
-pip install -E ~/var/srvc/ckan.net/pyenv git+https://github.com/ckan/ckanext-scheming.git
+pip install -E /usr/lib/ckan/default git+https://github.com/ckan/ckanext-scheming.git
 
 vim /etc/ckan/default/development.ini
 #add after 
