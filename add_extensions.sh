@@ -10,6 +10,8 @@ pip install git+https://github.com/ckan/ckanext-scheming.git
 pip install git+https://github.com/eawag-rdm/ckanext-repeating.git
 pip install git+https://github.com/espona/ckanext-composite.git
 pip install git+https://github.com/espona/ckanext-restricted.git
+pip install ckanapi
+pip install ckantoolkit
 
 #add the word 'restricted' (without the '' quotes) to ckan.plugins in the /etc/ckan/default/development.ini file
 vim /etc/ckan/default/development.ini
