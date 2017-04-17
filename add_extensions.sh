@@ -21,18 +21,21 @@ wget https://raw.githubusercontent.com/feup-infolab/ckanext-envidat_schema/maste
 #add the word 'restricted' (without the '' quotes) to ckan.plugins in the /etc/ckan/default/development.ini file
 vim /etc/ckan/default/development.ini
 
-# after:
+# START_CHANGES:
+
 ## Plugins Settings
 
-## Note: Add ``datastore`` to enable the CKAN DataStore
-##       Add ``datapusher`` to enable DataPusher
-##               Add ``resource_proxy`` to enable resorce proxying and get around the
-##               same origin policy
-# ckan.plugins = stats text_view image_view recline_view datastore repeating composite restricted scheming_datasets
-# scheming.dataset_schemas = /etc/ckan/default/datacite_dataset.json
-# scheming.presets = ckanext.scheming:presets.json
-# scheming.dataset_fallback = false
+# Note: Add ``datastore`` to enable the CKAN DataStore
+#       Add ``datapusher`` to enable DataPusher
+#               Add ``resource_proxy`` to enable resorce proxying and get around the
+#               same origin policy
+ckan.plugins = stats text_view image_view recline_view datastore scheming scheming_datasets repeating composite restricted
 
+scheming.dataset_schemas = ckanext.scheming:datacite_dataset.json
+scheming.presets = ckanext.scheming:presets.json
+scheming.dataset_fallback = false
+
+# END_CHANGES 
 
 cd /usr/lib/ckan/default/src/ckan
 paster serve /etc/ckan/default/development.ini
