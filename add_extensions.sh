@@ -5,13 +5,57 @@ su ckan #enter password
 virtualenv --no-site-packages /usr/lib/ckan/default
 . /usr/lib/ckan/default/bin/activate
 
+#update pip, install setuptools
+pip install setuptools==30.4.0
+pip install setuptools==31.0.0
+pip install pip==8.1.0
+pip install -U sentry
+pip install --upgrade pip
+
 #install dependencies
-pip install git+https://github.com/ckan/ckanext-scheming.git
-pip install git+https://github.com/ckan/ckantoolkit.git
-pip install git+https://github.com/ckan/ckanapi.git
-pip install git+https://github.com/eawag-rdm/ckanext-repeating.git
-pip install git+https://github.com/espona/ckanext-composite.git
-pip install git+https://github.com/espona/ckanext-restricted.git
+cd /usr/lib/ckan/default/src/ckan/ckanext
+
+# ckanext-schemin
+git clone https://github.com/ckan/ckanext-scheming.git
+cd ckanext-scheming
+python setup.py develop
+pip install -r dev-requirements.txt
+cd ..
+
+# ckantoolkit
+git clone https://github.com/ckan/ckantoolkit.git
+cd ckantoolkit
+python setup.py develop
+pip install -r dev-requirements.txt
+cd ..
+
+# ckanapi
+git clone https://github.com/ckan/ckanapi.git
+cd ckanapi
+python setup.py develop
+pip install -r dev-requirements.txt
+cd ..
+
+# ckanext-repeating
+git clone https://github.com/eawag-rdm/ckanext-repeating.git
+cd ckanext-repeating
+python setup.py develop
+pip install -r dev-requirements.txt
+cd ..
+
+# ckanext-composite
+git clone git+https://github.com/espona/ckanext-composite.git
+cd ckanext-composite
+python setup.py develop
+pip install -r dev-requirements.txt
+cd ..
+
+# ckanext-restricted
+git clone git+https://github.com/espona/ckanext-restricted.git
+cd ckanext-restricted
+python setup.py develop
+pip install -r dev-requirements.
+cd ..
 
 #fetch the json schema for permissions management
 sudo su ckan
