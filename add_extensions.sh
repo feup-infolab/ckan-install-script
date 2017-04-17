@@ -13,53 +13,108 @@ pip install -U sentry
 pip install --upgrade pip
 
 #install dependencies
-cd /usr/lib/ckan/default/src/ckan/ckanext
+export CKAN_EXTENSIONS_PATH=/usr/lib/ckan/default/src/ckan/ckanext
+#ln -s A B #2nd is the linkname
 
-# ckanext-schemin
-git clone https://github.com/ckan/ckanext-scheming.git
-cd ckanext-scheming
-python setup.py develop
-pip install -r dev-requirements.txt
-cd ..
+# ckanext-scheming
+rm -rf $CKAN_EXTENSIONS_PATH/ckanext-scheming &&
+git clone https://github.com/ckan/ckanext-scheming.git && 
+cd $CKAN_EXTENSIONS_PATH/ckanext-scheming && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s $CKAN_EXTENSIONS_PATH/ckanext-scheming $CKAN_EXTENSIONS_PATH/scheming
 
 # ckantoolkit
-git clone https://github.com/ckan/ckantoolkit.git
-cd ckantoolkit
-python setup.py develop
-pip install -r dev-requirements.txt
-cd ..
+rm -rf $CKAN_EXTENSIONS_PATH/ckantoolkit &&
+git clone https://github.com/ckan/ckantoolkit.git && 
+cd $CKAN_EXTENSIONS_PATH/ckantoolkit && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
 
 # ckanapi
-git clone https://github.com/ckan/ckanapi.git
-cd ckanapi
-python setup.py develop
-pip install -r dev-requirements.txt
-cd ..
+rm -rf $CKAN_EXTENSIONS_PATH/ckanapi &&
+git clone https://github.com/ckan/ckanapi.git && 
+cd $CKAN_EXTENSIONS_PATH/ckanapi && 
+python setup.py develop && 
+pip install -r dev-requirements.txt &&
+cd $CKAN_EXTENSIONS_PATH
 
 # ckanext-repeating
-git clone https://github.com/eawag-rdm/ckanext-repeating.git
-cd ckanext-repeating
-python setup.py develop
-pip install -r dev-requirements.txt
-cd ..
+rm -rf $CKAN_EXTENSIONS_PATH/ckanext-repeating &&
+git clone https://github.com/eawag-rdm/ckanext-repeating.git && 
+cd $CKAN_EXTENSIONS_PATH/ckanext-repeating && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s $CKAN_EXTENSIONS_PATH/ckanext-repeating $CKAN_EXTENSIONS_PATH/repeating
 
 # ckanext-composite
-git clone git+https://github.com/espona/ckanext-composite.git
-cd ckanext-composite
-python setup.py develop
-pip install -r dev-requirements.txt
-cd ..
+rm -rf $CKAN_EXTENSIONS_PATH/ckanext-composite &&
+git clone https://github.com/espona/ckanext-composite.git && 
+cd $CKAN_EXTENSIONS_PATH/ckanext-composite && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s $CKAN_EXTENSIONS_PATH/ckanext-composite $CKAN_EXTENSIONS_PATH/composite && 
 
 # ckanext-restricted
-git clone git+https://github.com/espona/ckanext-restricted.git
-cd ckanext-restricted
-python setup.py develop
-pip install -r dev-requirements.
-cd ..
+rm -rf $CKAN_EXTENSIONS_PATH/ckanext-restricted &&
+git clone https://github.com/espona/ckanext-restricted.git && 
+cd $CKAN_EXTENSIONS_PATH/ckanext-restricted && 
+python setup.py develop && 
+pip install -r dev-requirements && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s $CKAN_EXTENSIONS_PATH/ckanext-restricted $CKAN_EXTENSIONS_PATH/restricted
+
+# ckantoolkit
+rm -rf ckantoolkit
+git clone https://github.com/ckan/ckantoolkit.git && 
+cd ckantoolkit && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s ckanext-ckantoolkit ckantoolkit 
+
+# ckanapi
+rm -rf ckanapi
+git clone https://github.com/ckan/ckanapi.git && 
+cd ckanapi && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s ckanext-ckanapi ckanapi
+
+# ckanext-repeating
+rm -rf $CKAN_EXTENSIONS_PATH/ckanext-repeating
+git clone https://github.com/eawag-rdm/ckanext-repeating.git && 
+cd $CKAN_EXTENSIONS_PATH/ckanext-repeating && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s $CKAN_EXTENSIONS_PATH/ckanext-repeating $CKAN_EXTENSIONS_PATH/repeating
+
+# ckanext-composite
+rm -rf ckanext-composite
+git clone https://github.com/espona/ckanext-composite.git && 
+cd ckanext-composite && 
+python setup.py develop && 
+pip install -r dev-requirements.txt && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s ckanext-composite composite && 
+
+# ckanext-restricted
+rm -rf ckanext-restricted
+git clone https://github.com/espona/ckanext-restricted.git && 
+cd ckanext-restricted && 
+python setup.py develop && 
+pip install -r dev-requirements && 
+cd "$CKAN_EXTENSIONS_PATH" && 
+ln -s ckanext-restricted restricted
 
 #fetch the json schema for permissions management
-sudo su ckan
-cd /home/ckan/ckanext-scheming/ckanext/scheming
+cd /usr/lib/ckan/default/src/ckan/ckanext/scheming
 wget https://raw.githubusercontent.com/feup-infolab/ckanext-envidat_schema/master/ckanext/envidat_schema/datacite_dataset.json
 
 #add the word 'restricted' (without the '' quotes) to ckan.plugins in the /etc/ckan/default/development.ini file
