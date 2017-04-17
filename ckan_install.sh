@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+die_on_bad_cd()
+{
+  local folder=$1
+  echo "Unable to cd to $folder"
+  #exit 1
+}
+
 sudo apt-get install python-dev postgresql libpq-dev python-pip python-virtualenv git-core solr-jetty
 sudo -H pip install --upgrade pip
 
@@ -19,13 +26,13 @@ sudo chown ckan /var/lib/ckan
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
-su ckan #enter password
+sudo su ckan #enter password
 virtualenv --no-site-packages /usr/lib/ckan/default
 . /usr/lib/ckan/default/bin/activate
 
 #deactivate
 
-cd ~
+cd ~ || die_on_bad_cd "$HOME"
 pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.5.2#egg=ckan'
 pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external
 
@@ -50,7 +57,7 @@ sudo chown -R ckan  ~/ckan/etc
 sudo apt-get -y install nodejs npm vim
 su ckan
 git clone https://github.com/silvae86/filepatcher.git
-cd filepatcher
+cd filepatcher || die_on_bad_cd "$pwd/filepatcher"
 npm install
 
 #edit Jetty8 configuration
@@ -79,7 +86,7 @@ telnet localhost 8983
 #create ckan configuration file
 sudo apt-get install python-pastescript
 su ckan
-cd ~
+cd ~ || die_on_bad_cd "$HOME"
 
 #activate python virtualenv
 su ckan
@@ -107,7 +114,7 @@ vim /etc/ckan/default/development.ini
 #save (type :wq ENTER)
 
 #Create database tables
-cd /usr/lib/ckan/default/src/ckan
+cd /usr/lib/ckan/default/src/ckan || die_on_bad_cd "/usr/lib/ckan/default/src/ckan"
 pip install -I html5lib==0.9999999
 paster db init -c /etc/ckan/default/development.ini
 
@@ -116,7 +123,7 @@ ln -s /usr/lib/ckan/default/src/ckan/who.ini /etc/ckan/default/who.ini
 
 #start server (make sure you have the python virtual env activated before)
 #the command line should be like >>>>>>(default)<<<<<<< ckan@yulia-VirtualBox:/usr/lib/ckan/default/src/ckan$
-cd /usr/lib/ckan/default/src/ckan
+cd /usr/lib/ckan/default/src/ckan || die_on_bad_cd "/usr/lib/ckan/default/src/ckan"
 paster serve /etc/ckan/default/development.ini
 
 #set up ckan service
