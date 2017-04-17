@@ -50,27 +50,27 @@ install_extension()
 
   cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
 
-  echo "oftlink_abs_path $softlink_abs_path"
+  echo "softlink_abs_path $softlink_abs_path"
   echo "checkout_destination_abs_path $checkout_destination_abs_path"
 
-  if [ "$softlink_name" != "" ] && [ "$softlink_abs_path" != "$checkout_destination_abs_path" ]
-  then
-    #ln -s A B #2nd is the linkname
-    echo "removing link $softlink_abs_path"
-    rm -rf $softlink_abs_path
-
-    echo "adding link $checkout_folder_abs_path to $softlink_abs_path"
-    ln -s $checkout_folder_abs_path $softlink_abs_path
-  fi
+  # if [ "$softlink_name" != "" ] && [ "$softlink_abs_path" != "$checkout_destination_abs_path" ]
+  # then
+  #   #ln -s A B #2nd is the linkname
+  #   echo "removing link $softlink_abs_path"
+  #   rm -rf $softlink_abs_path
+  #
+  #   echo "adding link $checkout_folder_abs_path to $softlink_abs_path"
+  #   ln -s $checkout_folder_abs_path $softlink_abs_path
+  # fi
 
   cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
 }
 
 #install dependencies
 
-#install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" "scheming" &&
-#install_extension "https://github.com/ckan/ckantoolkit.git" "ckantoolkit" &&
-#install_extension "https://github.com/ckan/ckanapi.git" "ckanapi" &&
+install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" "scheming" &&
+install_extension "https://github.com/ckan/ckantoolkit.git" "ckantoolkit" &&
+install_extension "https://github.com/ckan/ckanapi.git" "ckanapi" &&
 install_extension "https://github.com/eawag-rdm/ckanext-repeating.git" "ckanext-repeating" "repeating" &&
 install_extension "https://github.com/espona/ckanext-composite.git" "ckanext-composite" "composite" &&
 install_extension "https://github.com/espona/ckanext-restricted.git" "ckanext-restricted" "restricted"
