@@ -25,15 +25,15 @@ vim /etc/ckan/default/development.ini
 
 ## Plugins Settings
 
-# Note: Add ``datastore`` to enable the CKAN DataStore
-#       Add ``datapusher`` to enable DataPusher
-#               Add ``resource_proxy`` to enable resorce proxying and get around the
-#               same origin policy
-ckan.plugins = stats text_view image_view recline_view datastore scheming scheming_datasets repeating composite restricted
+## Note: Add ``datastore`` to enable the CKAN DataStore
+##       Add ``datapusher`` to enable DataPusher
+##               Add ``resource_proxy`` to enable resorce proxying and get around the
+##               same origin policy
+#ckan.plugins = stats text_view image_view recline_view datastore scheming scheming_datasets repeating composite restricted
 
-scheming.dataset_schemas = ckanext.scheming:datacite_dataset.json
-scheming.presets = ckanext.scheming:presets.json
-scheming.dataset_fallback = false
+#scheming.dataset_schemas = ckanext.scheming:datacite_dataset.json
+#scheming.presets = ckanext.scheming:presets.json
+#scheming.dataset_fallback = false
 
 # END_CHANGES 
 
