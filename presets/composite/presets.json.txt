@@ -1,0 +1,26 @@
+{
+  "scheming_presets_version": 1,
+  "about": "These are the composite field presets",
+  "about_url": "http://github.com/espona/ckanext-composite",
+  "presets": [
+    {
+      "preset_name": "composite",
+      "values": {
+         "form_snippet": "composite.html",
+         "display_snippet": "composite.html",
+         "validators": "composite_group2json",
+         "output_validators": "composite_group2json_output"
+       }
+    },
+    {
+      "preset_name": "composite_repeating",
+      "values": {
+         "form_snippet": "composite_repeating.html",
+         "display_snippet": "composite_repeating.html",
+         "validators": "composite_repeating_group2json",
+         "output_validators": "composite_group2json_output"
+       }
+    }
+  ]
+}
+ 

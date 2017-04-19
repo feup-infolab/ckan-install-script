@@ -5,13 +5,6 @@ sudo su ckan
 virtualenv --no-site-packages /usr/lib/ckan/default
 . /usr/lib/ckan/default/bin/activate
 
-#update pip, install setuptools
-pip install setuptools==30.4.0
-pip install setuptools==31.0.0
-pip install pip==8.1.0
-pip install -U sentry
-pip install --upgrade pip
-
 cd ~ || die_on_bad_cd "$HOME"
 pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.5.2#egg=ckan'
 pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external
@@ -48,10 +41,15 @@ install_extension()
     pip install -r dev-requirements.txt
   fi
 
-  cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
+  if [ -f "$checkout_folder_abs_path/requirements.txt" ]
+  then
+    pip install -r requirements.txt
+  fi
 
-  echo "softlink_abs_path $softlink_abs_path"
-  echo "checkout_destination_abs_path $checkout_destination_abs_path"
+  # cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
+
+  #echo "softlink_abs_path $softlink_abs_path"
+  #echo "checkout_destination_abs_path $checkout_destination_abs_path"
 
   # if [ "$softlink_name" != "" ] && [ "$softlink_abs_path" != "$checkout_destination_abs_path" ]
   # then
@@ -63,12 +61,12 @@ install_extension()
   #   ln -s $checkout_folder_abs_path $softlink_abs_path
   # fi
 
-  cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
+  #cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
 }
 
 #install dependencies
 
-install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" "scheming" &&
+#install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" "scheming" &&
 install_extension "https://github.com/ckan/ckantoolkit.git" "ckantoolkit" &&
 install_extension "https://github.com/ckan/ckanapi.git" "ckanapi" &&
 install_extension "https://github.com/eawag-rdm/ckanext-repeating.git" "ckanext-repeating" "repeating" &&
