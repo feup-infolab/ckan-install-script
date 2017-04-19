@@ -15,7 +15,7 @@ die_on_bad_cd()
 {
   local folder=$1
   echo "Unable to cd to $folder"
-  #exit 1
+  exit 1
 }
 
 install_extension()
@@ -45,56 +45,23 @@ install_extension()
   then
     pip install -r requirements.txt
   fi
-
-  # cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
-
-  #echo "softlink_abs_path $softlink_abs_path"
-  #echo "checkout_destination_abs_path $checkout_destination_abs_path"
-
-  # if [ "$softlink_name" != "" ] && [ "$softlink_abs_path" != "$checkout_destination_abs_path" ]
-  # then
-  #   #ln -s A B #2nd is the linkname
-  #   echo "removing link $softlink_abs_path"
-  #   rm -rf $softlink_abs_path
-  #
-  #   echo "adding link $checkout_folder_abs_path to $softlink_abs_path"
-  #   ln -s $checkout_folder_abs_path $softlink_abs_path
-  # fi
-
-  #cd "$CKAN_EXTENSIONS_PATH" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
 }
 
-#install dependencies
+#install extensions
 
-#install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" "scheming" &&
-install_extension "https://github.com/ckan/ckantoolkit.git" "ckantoolkit" &&
-install_extension "https://github.com/ckan/ckanapi.git" "ckanapi" &&
+install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" "scheming" &&
 install_extension "https://github.com/eawag-rdm/ckanext-repeating.git" "ckanext-repeating" "repeating" &&
 install_extension "https://github.com/espona/ckanext-composite.git" "ckanext-composite" "composite" &&
 install_extension "https://github.com/espona/ckanext-restricted.git" "ckanext-restricted" "restricted"
 
-#fetch the json schema for permissions management
-cd "$CKAN_EXTENSIONS_PATH/scheming" || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
-wget https://raw.githubusercontent.com/feup-infolab/ckanext-envidat_schema/master/ckanext/envidat_schema/datacite_dataset.json
-
-#add the word 'restricted' (without the '' quotes) to ckan.plugins in the /etc/ckan/default/development.ini file
+#replace the text in the /etc/ckan/default/development.ini file
 vim /etc/ckan/default/development.ini
 
-# START_CHANGES:
-
+#replace from
 ## Plugins Settings
-
-## Note: Add ``datastore`` to enable the CKAN DataStore
-##       Add ``datapusher`` to enable DataPusher
-##               Add ``resource_proxy`` to enable resorce proxying and get around the
-##               same origin policy
-#ckan.plugins = stats text_view image_view recline_view datastore scheming scheming_datasets repeating composite restricted
-
-#scheming.dataset_schemas = ckanext.scheming:datacite_dataset.json
-#scheming.presets = ckanext.scheming:presets.json
-#scheming.dataset_fallback = false
-
-# END_CHANGES
+#to
+#ckan.views.default_views = image_view text_view recline_view
+#with the text in the plugin_settings.ini file
 
 cd /usr/lib/ckan/default/src/ckan || die_on_bad_cd "$CKAN_EXTENSIONS_PATH"
 paster serve /etc/ckan/default/development.ini
