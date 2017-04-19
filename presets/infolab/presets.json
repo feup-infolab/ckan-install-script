@@ -6,7 +6,7 @@
     {
       "preset_name": "tag_string_upper_autocomplete",
       "values": {
-        "validators": "",
+        "validators": "ignore_missing tag_string_convert",
         "form_attrs": {
           "data-module": "autocomplete",
           "data-module-tags": "",
