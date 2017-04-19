@@ -10,6 +10,10 @@ die_on_bad_cd()
 sudo apt-get install python-dev postgresql libpq-dev python-pip python-virtualenv git-core solr-jetty
 sudo -H pip install --upgrade pip
 
+#fixes UndefinedEnvironmentName: 'extra' does not exist in evaluation environment error on ubuntu 16.04
+# https://github.com/getsentry/sentry/issues/3143
+pip install setuptools==20.4
+
 #create ckan user
 sudo adduser ckan
 
