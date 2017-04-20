@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+sudo su ckan
+virtualenv --no-site-packages /usr/lib/ckan/default
+. /usr/lib/ckan/default/bin/activate
+
 die_on_bad_cd()
 {
   local folder=$1
