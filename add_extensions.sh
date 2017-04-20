@@ -17,7 +17,7 @@ source ./utils.sh
 
 install_extension "https://github.com/ckan/ckanext-scheming.git" "ckanext-scheming" &&
 install_extension "https://github.com/eawag-rdm/ckanext-repeating.git" "ckanext-repeating" &&
-install_extension "https://github.com/espona/ckanext-composite.git" "ckanext-composite" &&
+install_extension "https://github.com/espona/ckanext-composite.git" "ckanext-composite" "74888af4bbd16fc3be7e796012a5e163dcfdd655" &&
 install_extension "https://github.com/espona/ckanext-restricted.git" "ckanext-restricted"
 
 #replace the text in the /etc/ckan/default/development.ini file

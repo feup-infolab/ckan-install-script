@@ -11,6 +11,7 @@ install_extension()
 {
   local github_url=$1
   local checkout_foldername=$2
+  local commit_hash=$3
 
   local checkout_folder_abs_path="$CKAN_EXTENSIONS_PATH/$checkout_foldername"
 
@@ -20,6 +21,12 @@ install_extension()
   fi
 
   git clone "$github_url" "$checkout_folder_abs_path"
+
+  if [[ "$commit_hash" != "" ]]; then
+    cd $checkout_folder_abs_path
+    git checkout "$commit_hash"
+  fi
+  
   cd "$checkout_folder_abs_path" &&
   python setup.py develop
 
