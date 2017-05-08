@@ -4,7 +4,12 @@ site_url="ckan-rdm.up.pt"
 site_alias="www.ckan-rdm.up.com"
 
 sudo cp /etc/ckan/default/development.ini /etc/ckan/default/production.ini
-sudo apt-get -y install apache2 libapache2-mod-wsgi libapache2-mod-rpaf nginx
+sudo apt-get -y install apache2 libapache2-mod-wsgi libapache2-mod-rpaf
+
+#need to stop apache or else nginx gives error while installing
+sudo systemctl stop apache2.service
+sudo apt-get -y install nginx
+sudo systemctl start apache2.service
 
 #Install Nginx (a web server) which will proxy the content from Apache and add a layer of caching
 sudo apt-get install postfix
