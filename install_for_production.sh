@@ -26,7 +26,7 @@ fileConfig(config_filepath)
 application = loadapp('config:%s' % config_filepath)\n" | sudo tee /etc/ckan/default/apache.wsgi
 
 #apache VHosts file
-printf "<VirtualHost 127.0.0.1:8080>
+printf "<VirtualHost 127.0.0.1:5000>
     ServerName $site_url
     ServerAlias $site_alias
     WSGIScriptAlias / /etc/ckan/default/apache.wsgi
@@ -56,7 +56,7 @@ printf "<VirtualHost 127.0.0.1:8080>
 
 #modify apache ports.conflicts
 sudo vim /etc/apache2/ports.conf
-#replace Listen 80 with Listen 8080, save and quit
+#replace Listen 80 with Listen 5000, save and quit
 
 #create nginx configuration
 
@@ -66,7 +66,7 @@ proxy_temp_path /tmp/nginx_proxy 1 2;
 server {
     client_max_body_size 100M;
     location / {
-        proxy_pass http://127.0.0.1:8080/;
+        proxy_pass http://127.0.0.1:5000/;
         proxy_set_header X-Forwarded-For \$remote_addr;
         proxy_set_header Host \$host;
         proxy_cache cache;
@@ -86,3 +86,16 @@ sudo rm -vi /etc/nginx/sites-enabled/default
 sudo ln -s /etc/nginx/sites-available/ckan /etc/nginx/sites-enabled/ckan_default
 sudo service apache2 reload
 sudo service nginx reload
+
+#disable default homepage
+sudo a2dissite 000-default &&
+sudo service apache2 reload
+#simply restarting apache is not enough, you need to reboot the machine!
+sudo reboot now
+
+#install cli browser to check if things are ok
+sudo apt-get -y install lynx &&
+lynx http://127.0.0.1
+
+#see list of enabled sites
+apache2ctl -S

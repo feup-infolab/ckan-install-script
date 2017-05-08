@@ -96,6 +96,10 @@ virtualenv --no-site-packages /usr/lib/ckan/default
 #create default ckan config file
 paster make-config ckan /etc/ckan/default/development.ini
 
+#create your logfiles Directory
+sudo mkdir -p /var/log/ckan &&
+sudo chown -R ckan /var/log/ckan
+
 #Replace sections in CKAN configuration
 vim /etc/ckan/default/development.ini
 
@@ -104,6 +108,47 @@ vim /etc/ckan/default/development.ini
 #   ckan.site_url =                             -> ckan.site_url = http://<IP/name of the machine.xpto.com>
 #   #DB PASSWORD
 #   sqlalchemy.url = postgresql://ckan_default:pass@localhost/ckan_default =                             -> sqlalchemy.url = postgresql://ckan_default:ckan@localhost/ckan_default #ASSUMING THE postgresql credentials are: password 'ckan';  username 'ckan_default'
+
+# Logging configuration
+# (NOTE THAT YOUR log file path is at the end of this section, change it accordingly!a)
+
+# ## Logging configuration
+# [loggers]
+# keys = root, ckan, ckanext
+#
+# [handlers]
+# keys = console
+#
+# [formatters]
+# keys = generic
+#
+# [logger_root]
+# level = WARNING
+# handlers = console, file
+#
+# [logger_ckan]
+# level = INFO
+# handlers = console,file
+# qualname = ckan
+# propagate = 0
+#
+# [logger_ckanext]
+# level = DEBUG
+# handlers = console,file
+# qualname = ckanext
+# propagate = 0
+#
+# [handler_console]
+# class = StreamHandler
+# args = (sys.stderr,)
+# level = NOTSET
+# formatter = generic
+#
+# [handler_file]
+# class = handlers.TimedRotatingFileHandler
+# args = ('/var/log/ckan/default_development.log', 'W0', 1, 4)
+# level = NOTSET
+# formatter = generic
 
 #save (type :wq ENTER)
 
