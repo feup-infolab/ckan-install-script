@@ -7,7 +7,7 @@ die_on_bad_cd()
   #exit 1
 }
 
-sudo apt-get install python-dev postgresql libpq-dev python-pip python-virtualenv git-core solr-jetty &&
+sudo apt-get install -y python-dev postgresql libpq-dev python-pip python-virtualenv git-core solr-jetty &&
 sudo -H pip install --upgrade pip &&
 
 #fixes UndefinedEnvironmentName: 'extra' does not exist in evaluation environment error on ubuntu 16.04
@@ -25,7 +25,7 @@ sudo ln -s ~/ckan/etc /etc/ckan &&
 sudo mkdir -p /usr/lib/ckan/default &&
 sudo chown ckan /usr/lib/ckan/default &&
 sudo mkdir -p /var/lib/ckan/resources &&
-sudo chown ckan /var/lib/ckan &&
+sudo chown -R ckan /var/lib/ckan &&
 
 export LC_ALL="en_US.UTF-8" &&
 export LC_CTYPE="en_US.UTF-8"
@@ -33,13 +33,14 @@ export LC_CTYPE="en_US.UTF-8"
 sudo su ckan #enter password
 virtualenv --no-site-packages /usr/lib/ckan/default
 . /usr/lib/ckan/default/bin/activate
-pip install setuptools==20.4
+pip install setuptools==20.4 &&
 
 #deactivate
 
-cd ~ || die_on_bad_cd "$HOME";
+cd ~ || die_on_bad_cd "$HOME" &&
 pip install -e 'git+https://github.com/ckan/ckan.git@ckan-2.5.2#egg=ckan' &&
-pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external
+pip install -r /usr/lib/ckan/default/src/ckan/requirements.txt --allow-all-external &&
+echo "OK"
 
 ##	for verification
 #deactivate
@@ -51,7 +52,7 @@ exit #leave ckan user shell
 #sudo -u postgres psql -l;
 
 #create postgresql user
-sudo -u postgres createuser -S -D -R -P ckan_default;
+sudo -u postgres createuser -S -D -R -P ckan_default
 
 #create CKAN database
 sudo -u postgres createdb -O ckan_default ckan_default -E utf-8
@@ -86,7 +87,7 @@ telnet localhost 8983 #should show "Escape character is '^]'"
 #create ckan configuration file
 sudo apt-get -y install python-pastescript
 
-su ckan
+sudo su ckan
 cd ~ || die_on_bad_cd "$HOME"
 
 #activate python virtualenv
